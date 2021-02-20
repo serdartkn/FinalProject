@@ -11,10 +11,10 @@ namespace ConsoleUI
         {
             ProductManager productmanager = new ProductManager(new EfProductDal());
 
-            foreach (var p in productmanager.GetAllByUnitPrice(20,21))
-            {
-                Console.WriteLine(p.ProductName);
-            }
+            //foreach (var p in productmanager.GetAll())
+            //{
+            //    Console.WriteLine(p.ProductName);
+            //}
 
             //productmanager.GetAllByCagetoryId(2);
             //productmanager.GetAllByUnitPrice(20,35);
