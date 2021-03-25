@@ -1,13 +1,17 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Results;
 using Core.Utilities.Results.Concrate;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static Core.Aspect.Autofact.Validation.ValicationAspect;
 
 namespace Business.Concrete
 {
@@ -20,12 +24,9 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
-            if (product.ProductName.Length<2)
-            {
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
@@ -63,7 +64,7 @@ namespace Business.Concrete
 
         public IDataResult<Product> GetById(int Id)
         {
-           return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == Id));
+            return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == Id));
         }
 
         public IDataResult<List<ProductDetailsDto>> GetProductDetails()
