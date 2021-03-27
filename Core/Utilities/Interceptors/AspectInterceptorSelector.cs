@@ -7,7 +7,7 @@ using static Core.Utilities.Interceptors.Class1;
 namespace Core.Utilities.Interceptors
 {
     public class AspectInterceptorSelector : IInterceptorSelector
-    {
+    {//VERDIGIMIZ CLASSIN, METOTLARIN VS ATTRIBUİTLERİNİ OKUYUP CALISMA SIRALARINA GORE LISTELEMEYE YARIYOR.
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>(true).ToList();

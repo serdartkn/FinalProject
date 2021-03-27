@@ -6,7 +6,7 @@ using System.Text;
 namespace Core.CrossCuttingConcerns.Validation.FluentValidation
 {
     public static class ValidationTool
-    {
+    { //BURADA 
         public static void Validate(IValidator validator,object entity)
         {
             var context = new ValidationContext<object>(entity); // Burada diyoruz ki product nesnesini doğrulayacağım.

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace WebAPI
 {
+    // STARTUP.cs'DE YAPTIÐIMIZ ÝÞLEMLERÝ AUTOFAC ÝLE YAPMAK ÝSTEDÝÐÝMÝZ ÝÇÝN BURADA AUTOFAC KONFÝGÜRASYONU YAPIYORUZ.
     public class Program
     {
         public static void Main(string[] args)
