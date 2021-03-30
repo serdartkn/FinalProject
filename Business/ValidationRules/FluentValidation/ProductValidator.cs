@@ -19,7 +19,6 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.UnitPrice).GreaterThanOrEqualTo(10).When(p => p.CategoryId == 1);
             //RuleFor(p => p.ProductName).Must(StartWithA);
         }
-
         private bool StartWithA(string arg)
         {
             return arg.StartsWith("A");

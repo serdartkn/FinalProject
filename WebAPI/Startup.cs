@@ -69,7 +69,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication();//
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

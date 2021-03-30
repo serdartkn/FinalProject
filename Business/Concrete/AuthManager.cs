@@ -15,7 +15,6 @@ public class AuthManager : IAuthService
 
     public AuthManager(IUserService userService, ITokenHelper tokenHelper)
     {
-
         _userService = userService;
         _tokenHelper = tokenHelper;
     }

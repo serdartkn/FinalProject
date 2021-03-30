@@ -2,6 +2,7 @@
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,6 +23,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
+        //Bu operasyonu çalıstırabilmesi için kişinin tokenı olması gerek. (parantezz içinin boş olması yetkisi yoksa dahi token'ı varsa işlem yaptırıyor.)
+        //( ise .netten geliyor.)
+        [Authorize(Roles ="Products.List,Admin")]
         public IActionResult GetAll()
         {
             var result = _productService.GetAll();
