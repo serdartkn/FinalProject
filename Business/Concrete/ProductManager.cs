@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -28,6 +29,7 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
+        [SecuredOperation("product.add,admin")]//Add metodu için yetkilendırme kontrolu yapıyor.
         [ValidationAspect(typeof(ProductValidator))]//ADD METODUNU DOPGRULA PRODUCTVALIDARO DAKI KURALLARLA
         public IResult Add(Product product)
         {
