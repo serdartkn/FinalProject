@@ -14,7 +14,6 @@ namespace Business.BusinessAspects.Autofac
     public class SecuredOperation : MethodInterception
     {
         //Bu SecuredOperation JWT İçindir
-
         private string[] _roles;
         //burası yapılan her istek için bir context oluşturur.
         private IHttpContextAccessor _httpContextAccessor;
@@ -25,7 +24,6 @@ namespace Business.BusinessAspects.Autofac
             _roles = roles.Split(',');
             //Ihttp AspNetCore içinden geliyr o yuzden ıjectıon etmek gerek
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
-
         }
 
         protected override void OnBefore(IInvocation invocation)

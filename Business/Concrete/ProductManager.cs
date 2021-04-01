@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofact.Caching;
 using Core.Aspect.Autofact.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Business;
@@ -16,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace Business.Concrete
 {
@@ -29,12 +31,13 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        [SecuredOperation("product.add,admin")]//Add metodu için yetkilendırme kontrolu yapıyor.
-        [ValidationAspect(typeof(ProductValidator))]//ADD METODUNU DOPGRULA PRODUCTVALIDARO DAKI KURALLARLA
+        [SecuredOperation("Products.Add,admin")]//Add metodu için yetkilendırme kontrolu yapıyor.
+        [ValidationAspect(typeof(ProductValidator))]//ADD METODUNU DOPGRULA PRODUCTVALIDAR DAKI KURALLARLA
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
             var result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId), CheckIfProductOfNameExists(product.ProductName), CheckIfCategoryLimitExceded());
-            if (result !=null)
+            if (result != null)
             {
                 return result;
             }
@@ -51,6 +54,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 23)
@@ -72,6 +76,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
         }
 
+        [CacheAspect]
         public IDataResult<Product> GetById(int Id)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == Id));
@@ -86,6 +91,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ProductDetailsDto>>(_productDal.GetProductDetails());
         }
 
+        //Şimdi bu aspecti ccalıstırınca update ıslemı basarılı olursa eğer removeaspect ıproductservice içindeki get kelimisini içeren
+        //tüm metotların cachesini silecektir.
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Product product)
         {
             if (product.ProductName.Length < 2)
@@ -118,12 +126,11 @@ namespace Business.Concrete
         private IResult CheckIfCategoryLimitExceded()
         {
             var result = _categoryService.GetAll();
-            if (result.Data.Count>15)
-            { 
-            return new ErrorResult(Messages.CheckIfCategoryLimitExceded);
+            if (result.Data.Count > 15)
+            {
+                return new ErrorResult(Messages.CheckIfCategoryLimitExceded);
             }
             return new SuccessResult();
-        }
-
+        }     
     }
 }
