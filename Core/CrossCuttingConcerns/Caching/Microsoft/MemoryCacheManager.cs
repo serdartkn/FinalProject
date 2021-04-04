@@ -10,11 +10,11 @@ using System.Text.RegularExpressions;
 namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
 
-    //ImemoryCache'de get,remove gibi metotlar olmasına ragmen bız bu metotları memorrycachemanager'de  hemen ahemen aynı 
-    //isime sahip metotlar olustrup burada cagırmamızın nedenı başka bir cachemanager sisteminde patlamamak ıcındır.
-    //memorycachemanager olusturup ıcındekı metotlara mıcrosoft cache metotlarını cagırmak adapter patterndir.
-    //(adaptasyon deseni)(yani var olan bir sistemi kendı sıstemımıze göre ayarladık.)
-    //IMemoryCache bir microsoft ürünüdür. Alternatif olarak redis kullanılabilir.
+    /*ImemoryCache'de get,remove gibi metotlar olmasına ragmen bız bu metotları memorrycachemanager'de  hemen ahemen aynı 
+    isime sahip metotlar olustrup burada cagırmamızın nedenı başka bir cachemanager sisteminde patlamamak ıcındır.
+    memorycachemanager olusturup ıcındekı metotlara mıcrosoft cache metotlarını cagırmak adapter patterndir.
+    (adaptasyon deseni)(yani var olan bir sistemi kendı sıstemımıze göre ayarladık.)
+    IMemoryCache bir microsoft ürünüdür. Alternatif olarak redis kullanılabilir.*/
     public class MemoryCacheManager : ICacheManager
     {
         IMemoryCache _memoryCache;
