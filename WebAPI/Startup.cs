@@ -74,6 +74,9 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureCustomExceptionMiddleware(); 
+
             //burada frontend e baglanmak ýcýn gereklý ýzýnler verýlýyor. aþaðýdaki adresten gelen herhangi bir isteðe izin ver diyoruz.
             //birden fazla sýtemýz varsa ayný verýyý ceken adres kýsýmlarýný výrgul ýle ayýracagýz.
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());

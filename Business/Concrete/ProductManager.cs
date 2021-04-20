@@ -31,7 +31,7 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        [SecuredOperation("Products.Add,admin")]//Add metodu için yetkilendırme kontrolu yapıyor.
+        //[SecuredOperation("Products.Add,admin")]//Add metodu için yetkilendırme kontrolu yapıyor.
         [ValidationAspect(typeof(ProductValidator))]//ADD METODUNU DOPGRULA PRODUCTVALIDAR DAKI KURALLARLA
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
